@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head_title %}Cancel subscription{% endblock %}
+
+{% block content %}
+
+{% if subscription %}
+<p>You are about to cancel your subscription.</p>
+<p>Please confirm that you wish to end your subscription.</p>
+<form method='POST'>
+    {% csrf_token %}
+    <button type="submit">Confirm and delete my subscription.</button>
+</form>
+{% else %}
+<p>You currently have no active subscription.</p>
+<a href="{% url 'profile' %}">Go to profile</a>
+<a href="{% url 'subscribe' %}">Subscribe</a>
+{% endif %}
+
+{% endblock %}

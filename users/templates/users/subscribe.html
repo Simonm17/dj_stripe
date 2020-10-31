@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_title %}Subscribe{% endblock %}
+
+{% block extra_head %}<script src="https://js.stripe.com/v3/"></script>{% endblock %}
+
+{% block content %}
+
+    {% if subscription.status == 'AC' and not subscription.cancel_at_period_end %}
+        <p>You have an active subscription.</p>
+        <h5>Subscription Details:</h5>
+        <p>Your subscription ID: {{ subscription.subscription_id }}</p>
+        {% if not subscription.cancel_at %}
+            <a href="{% url 'confirm_cancel' %}">Cancel my subscription</a>
+        {% endif %}
+    {% elif subscription and subscription.cancel_at_period_end %}
+        <p>Your active subscription (ID {{ subscription.subscription_id }}) is scheduled to be canceled on {{ end_date }} <small>({{ days_until_end }}days left)</small></p>
+    {% else %}
+        <button type="submit" class="btn btn-primary" id="submitBtn">Subscribe</button>
+    {% endif %}
+
+    <script src="{% static 'js/checkout.js' %}"></script>
+{% endblock %}

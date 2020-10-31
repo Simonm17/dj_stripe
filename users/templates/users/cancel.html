@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block head_title %}Subscription checkout session cancelled {% endblock %}
+
+{% block content %}
+<p>You have cancelled the checkout session.</p>
+<a href="{% url 'home' %}">Go back home</a>
+<a href="{% url 'profile' %}">Go to profile</a>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class='profile-div'>
+        <ul class='profile-ul'>
+            <li class='profile-li'><a href="{% url 'account_email' %}">Edit Email Address</a></li>
+            <li class='profile-li'><a href="{% url 'account_change_password' %}">Change Password</a></li>
+            <li class='profile-li'><a href="{% url 'subscribe' %}">Get premium</a></li>
+        </ul>
+        <div class='profile-info'>
+            <h5 class='profile-heading'>
+                {% if user.username %}
+                    {{ user.username }}'s Profile
+                {% else %}
+                    {% if user.first_name %}{{ user.first_name }}{% endif %}
+                    {% if user.last_name %}{{ user.last_name }}{% endif %}'s Profile
+                {% endif %}
+            </h5>
+            <form class='add_email' method='POST'>
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button class='email-button' type='submit'>Update</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block head_title %}404{% endblock %}
+
+{% block content %}
+    <h1>Bad request</h1>
+    <a href="{% url 'home' %}">Go back home</a>
+{% endblock %}

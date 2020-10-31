@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block head_title %}Premium Subscription Successfully Created{% endblock %}
+
+{% block content %}
+
+<p>You have successfully subscribed for premium membership! Thank you for your purchase.</p>
+<a href="{% url 'profile' %}">Go back to profile</a>
+<a href="{% url 'home' %}">Go home</a>
+{% endblock %}

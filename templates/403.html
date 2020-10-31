@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block head_title %}404{% endblock %}
+
+{% block content %}
+    <h1>Permission Denid</h1>
+    <p>You do not have permission to view this page.</p>
+    <a href="{% url 'home' %}">Go back home</a>
+{% endblock %}

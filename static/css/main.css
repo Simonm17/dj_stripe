@@ -1,0 +1,388 @@
+/*
+----- TABLE OF CONTENTS -----
+
+I. Header section
+II. Footer section
+III. Main section
+    a. Main
+    b. Messages
+    c. Login/Signup
+    d. Email/Password
+    e. Profile
+IV. Responsive
+
+HOW TO NAVIGATE with Ctrl + F:
+e.g. search for 'IIb' for Login section
+*/
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body, h1, h2, h3, h4, h5 {
+    background-color: rgb(224, 224, 224);
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+
+p::selection, a::selection, li::selection, img::selection {
+    background-color: white;
+}
+
+
+/* 
+--------------
+I. HEADER SECTION
+--------------
+*/
+
+header {
+    font-size: 18px;
+    min-height: 20vh;
+    width: 80%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-img {
+    width: 90px;
+}
+
+.logo-a {
+    flex: 1;
+}
+
+nav {
+    flex: 2;
+    display: flex;
+    justify-content: space-around;
+}
+
+header ul {
+    display: flex;
+    justify-content: center;
+}
+
+header li {
+    list-style: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.user-div {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+header a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: black;
+    opacity: .7;
+    letter-spacing: 1px;
+}
+
+nav a:hover {
+    text-shadow: 2px 2px 5px;
+    color: #a661ff
+}
+
+.burger {
+    display: none;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    margin: 5px;
+    background-color: #a5a5a5;
+}
+
+/* --------------
+II. FOOTER SECTION
+-------------- */
+
+footer {
+    display: flex;
+    /* position: fixed;
+    left: 20%;
+    bottom: 0; */
+    height: 15vh;
+    width: 60%;
+    margin: auto;
+    margin-top: 100px;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid;
+}
+
+footer li {
+    list-style: none;
+    margin: 5px 0 5px 0;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-shadow: 2px 2px 5px;
+    color: #a661ff
+}
+
+
+/* 
+---------------------------------------------------------------------
+/    /    /    /    /    /    /III. MAIN SECTION/    /    /    /    /    /
+---------------------------------------------------------------------
+*/
+
+/* IIIa MAIN SECTION */
+main {
+    width: 80%;
+    margin: auto;
+}
+
+
+/* IIIb. MESSAGES  SECTION*/
+.messages {
+    width: 70%;
+    margin: auto;
+    animation: messages-fade 5s ease-out forwards;
+}
+
+@keyframes messages-fade {
+    0% {
+        opacity: 1;
+        pointer-events: all;
+    }
+    90% {
+        opacity: 1;
+        pointer-events: none;
+    }
+    100% {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+/*  IIIc. LOGIN/SIGNUP SECTION */
+
+.sign-main-div {
+    width: 350px;
+    margin: auto;
+    border: 1px solid;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 15px 0 25px 0;
+    box-shadow: -3px 3px 5px  #a5a5a5;
+    animation: account-drop 1.5s ease-out;
+}
+
+@keyframes account-drop {
+    0% {
+        opacity: 0;
+        transform: translateY(-80px);
+    }
+    30% {
+        opacity: 0;
+        transform: translateY(-80px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.sign-header {
+    background-color: white;
+}
+
+.login, .signup {
+    padding: 10px;
+}
+
+.login ul, .signup li {
+    list-style: none;
+    color: red;
+}
+
+.login-button {
+    width: 100%;
+}
+
+.or-div {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0 10px 0;
+}
+
+.login-or {
+    color: gray;
+    text-transform: uppercase;
+    padding-left: 10px;
+    padding-right: 10px;
+    pointer-events: none;
+}
+
+.or-sub-div {
+    border-top: 1px solid;
+    flex: 1;
+    position: relative;
+    top: 9px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.fa-google {
+    background: linear-gradient(rgb(71, 99, 255), rgb(78, 190, 13), rgb(243, 255, 74), rgb(255, 18, 18));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.forgot-password, .forgot-password:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.google, .google:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.sign-sub-div {
+    width: 350px;
+    margin: auto;
+    border: 1px solid;
+    border-radius: 5px;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: -3px 3px 5px  #a5a5a5;
+    animation: account-rise 1.5s ease-out;
+}
+
+.sign-sub-div p {
+    text-align: center;
+    padding-top: 10px;
+}
+
+@keyframes account-rise {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    30% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+/* IIId. EMAIL/PASSWORD SECTION */
+.add_email, .password_change, .password_reset {
+    max-width: 475px;
+}
+
+.email-button {
+    background-color:  rgb(185, 185, 185);
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 8px;
+}
+
+/* IIIe. PROFILE SECTION */
+.profile-div {
+    display: flex;
+    width: 60%;
+    margin: auto;
+    justify-content: center;
+}
+
+.profile-ul {
+    flex:1;
+    margin-top: 40px;
+}
+
+.profile-li {
+    list-style: none;
+    font-size: 18px;
+    display: block;
+    margin: 5px 0;
+}
+
+.profile-info {
+    flex: 2;
+}
+
+.profile-heading {
+    margin-bottom: 25px;
+}
+
+
+/* IV. MOBILE RESPONSIVE */
+
+@media screen and (max-width: 768px) {
+    footer {
+        display: none;
+    }
+
+    body {
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+    nav {
+        position: absolute;
+        right: 0px;
+        height: 80vh;
+        top: 20vh;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: flex-end;
+        align-items: center;
+        width: 40%;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+
+    }
+
+    nav ul {
+        flex-direction: column;
+    }
+
+    nav li {
+        margin: 10px 0;
+        opacity: 0;
+    }
+
+    .burger {
+        display: block;
+        cursor: pointer;
+    }
+}
+
+.nav-active {
+    transform: translateX(0%);
+}
+
+@keyframes userLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
