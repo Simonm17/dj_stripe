@@ -195,9 +195,10 @@ def stripe_webhook(request):
         customer = StripeCustomer.objects.get(stripe_customer_id=session['customer'])
         if session['cancel_at_period_end'] == True:
             try:
+                print(f'DELETING SUB AT PERIOD END')
                 subscription = Subscription.objects.get(customer=customer)
                 subscription.cancel_at_period_end=True
-                subscription.cancel_at=datetime.fromtimestamp(session['cancel_at'], tz=UTC)
+                subscription.cancel_at=datetime.fromtimestamp(session['cancel_at'])
                 subscription.save()
             except Exception as e:
                 print(e)

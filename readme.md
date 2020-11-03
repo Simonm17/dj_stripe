@@ -1,12 +1,13 @@
-# Django boilerplate
+# Django & Stripe
 
-Django boilerplate that uses Django all-auth's social accounts for Django's built-in User model.
+Django boilerplate using django-allauth and Stripe API
 
 ## Main packages
 - Django 3.1
 - Django all-auth 0.32.0
 - Crispy Forms 1.9
 - Sentry
+- Stripe
 
 ## Environment Variable Configurations
 1. Secret key
