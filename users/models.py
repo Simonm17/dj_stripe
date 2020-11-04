@@ -39,7 +39,7 @@ class Subscription(models.Model):
     customer = models.OneToOneField(StripeCustomer, on_delete=models.CASCADE)
     subscription_id = models.CharField(max_length=120, unique=True)
 
-    status = models.CharField(choices=STATUS, max_length=120, default=ACTIVE)
+    status = models.CharField(choices=STATUS, max_length=120, default=TRIALING)
 
     cancel_at_period_end = models.BooleanField(default=False)
     cancel_at = models.DateTimeField(null=True)

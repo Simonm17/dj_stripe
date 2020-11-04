@@ -167,9 +167,11 @@ def stripe_webhook(request):
         - cancel_at_period_end (boolean)
         - cancel_at (datetime)
     """
+
+
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
-        # Fetch all the required data from session
+
         stripe_customer_id = session.get('customer') # returns customer id 
         stripe_subscription_id = session.get('subscription') # returns subscription id
 
@@ -204,19 +206,24 @@ def stripe_webhook(request):
             print(e)
 
     if event['type'] == 'customer.subscription.updated':
-        """ Update the model fields to indicate subscription was canceled. """
         session = event['data']['object']
         customer = StripeCustomer.objects.get(stripe_customer_id=session['customer'])
+        subscription = Subscription.objects.get(customer=customer)
         if session['cancel_at_period_end'] == True:
             try:
                 print(f'DELETING SUB AT PERIOD END')
-                subscription = Subscription.objects.get(customer=customer)
                 subscription.cancel_at_period_end=True
                 subscription.cancel_at=datetime.fromtimestamp(session['cancel_at'])
                 subscription.save()
                 print(f'SUBSCRIPTION MODEL UPDATED')
             except Exception as e:
                 print(e)
+        try:
+            """ When stripe object is updated, set model's status as stripe's status. """
+            stripe_subscription_status = session['status']
+            subscription.status == stripe_subscription_status.upper()
+            subscription.save()
+        except Exception as e: print(e)
 
 
     if event['type'] == 'customer.subscription.deleted':
