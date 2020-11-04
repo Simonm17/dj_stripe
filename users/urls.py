@@ -7,7 +7,8 @@ from .views import (
     subscribe,
     stripe_config,
     stripe_webhook,
-    confirm_cancel
+    confirm_cancel,
+    # delete_membership
 )
 
 
@@ -19,5 +20,6 @@ urlpatterns = [
     path('cancel/', cancel),
     path('confirm-cancel/', confirm_cancel, name='confirm_cancel'),
     path('config/', stripe_config),
+    # path('delete-membership/', delete_membership, name='delete_membership'),
     path('webhook/', stripe_webhook),
 ]

@@ -6,13 +6,17 @@ import stripe
 
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .forms import UserUpdateForm
 from .models import StripeCustomer, Subscription
+from django.views.generic import View
+from django.contrib.auth.mixins import UserPassesTestMixin
+
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -84,7 +88,10 @@ def create_checkout_session(request):
                         'price': 'price_1HgEAWFnONXy6XW0sA1W3tuy',
                         'quantity': 1,
                     }
-                ]
+                ],
+                subscription_data={
+                    'trial_period_days': 30
+                }
             )
             return JsonResponse({'sessionId': checkout_session['id']})
         except Exception as e:
@@ -111,7 +118,6 @@ def confirm_cancel(request):
         subscription = Subscription.objects.get(customer=customer)
         context = {'subscription': subscription.subscription_id}
         if request.method == 'POST':
-            # stripe.Subscription.delete(subscription.subscription_id)
             stripe.Subscription.modify(
                 subscription.subscription_id,
                 cancel_at_period_end=True
@@ -124,7 +130,14 @@ def confirm_cancel(request):
     return render(request, 'users/confirm_cancel.html', context)
 
 
-# TODO: on confirm_cancel, we also need to delete subscription model after memnbership ends.
+
+# def delete_membership(request):
+#     """ IMPORTANT: for development testing only. """
+#     customer = StripeCustomer.objects.get(user=request.user)
+#     sub = Subscription.objects.get(customer=customer)
+#     stripe.Subscription.delete(sub.subscription_id)
+#     messages.success(request, f'You have successfully deleted {sub} manually.')
+#     return HttpResponseRedirect(reverse('profile'))
 
 
 @csrf_exempt
@@ -171,11 +184,12 @@ def stripe_webhook(request):
         except Exception as e:
             print(e)
 
+    """ NOTE: Initial subscription triggers checkout.session.completed, invoice.paid,
+                and customer.subscription.updated on successful transaction.
+                Hence use if blocks and no elif's for all event triggers.
+    """
+
     if event['type'] == 'invoice.paid':
-        """ NOTE: Initial subscription triggers checkout.session.completed, invoice.paid,
-                    and customer.subscription.updated on successful transaction.
-                    Hence use if blocks and no elif's for all event triggers.
-        """
         # if reoccuring subscription triggers, do nothing to models and keep them active.
         pass
 
@@ -200,17 +214,20 @@ def stripe_webhook(request):
                 subscription.cancel_at_period_end=True
                 subscription.cancel_at=datetime.fromtimestamp(session['cancel_at'])
                 subscription.save()
+                print(f'SUBSCRIPTION MODEL UPDATED')
             except Exception as e:
                 print(e)
+
 
     if event['type'] == 'customer.subscription.deleted':
         session = event['data']['object']
         try:
             stripe_customer_id = session.get('customer') # returns customer id 
-            stripe_subscription_id = session.get('subscription') # returns subscription id
-
+            stripe_subscription_id = session.get('id') # returns subscription id
+            print(stripe_customer_id, stripe_subscription_id)
             customer = StripeCustomer.objects.get(stripe_customer_id=stripe_customer_id)
             sub = Subscription.objects.get(customer=customer, subscription_id=stripe_subscription_id)
+            print(customer, sub)
             sub.delete()
         except Exception as e:
             print(e)

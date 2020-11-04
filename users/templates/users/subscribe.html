@@ -17,6 +17,12 @@
     {% elif subscription and subscription.cancel_at_period_end %}
         <p>Your active subscription (ID {{ subscription.subscription_id }}) is scheduled to be canceled on {{ end_date }} <small>({{ days_until_end }}days left)</small></p>
     {% else %}
+        <h1>Premium</h1>
+        <ul>
+            Subscriber Benefits:
+            <li>Something</li>
+            <li>Something else</li>
+        </ul>
         <button type="submit" class="btn btn-primary" id="submitBtn">Subscribe</button>
     {% endif %}
 

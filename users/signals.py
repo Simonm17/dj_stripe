@@ -7,6 +7,7 @@ from .models import Subscription, StripeCustomer
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
+
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def post_save_usermembership_create(sender, instance, created, *args, **kwargs):
     """ Create a signal function that will assign a stripe customer id to a user
@@ -20,6 +21,5 @@ def post_save_usermembership_create(sender, instance, created, *args, **kwargs):
         user_membership.stripe_customer_id = new_customer_id['id']
         user_membership.save()
 
-# TODO: it would be a good idea to check for any existing customers without a customer ID to create one if null.
 
 
